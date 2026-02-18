@@ -3,22 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>World Clock</title>
+  <title>WORLD CLOCK // TAG TIME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Rubik+Spray+Paint&family=Bungee+Shade&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>World Clock</h1>
+  <div class="spray-dots"></div>
+
+  <!-- Wall stickers -->
+  <div class="sticker">💀</div>
+  <div class="sticker">🔥</div>
+  <div class="sticker">⚡</div>
+  <div class="sticker">👾</div>
+  <div class="sticker">🎤</div>
+
+  <!-- Spray streak behind title -->
+  <div class="spray-streak"></div>
+
+  <!-- Sparkle stars -->
+  <div class="sparkle">✦</div>
+  <div class="sparkle">✦</div>
+  <div class="sparkle">✦</div>
+  <div class="sparkle">✦</div>
+
+  <!-- Crown — graffiti staple -->
+  <div class="crown">♛</div>
+
+  <h1 class="title-tag">
+    <span class="title-world">WORLD</span>
+    <span class="title-clock">CLOCK</span>
+  </h1>
+
   <div class="clocks">
-    <div class="clock-card">
+    <div class="clock-card card-pink">
+      <div class="drip"></div>
       <h2>Cape Town</h2>
       <p id="capetown-time" class="time">--:--:--</p>
+      <span class="zone-label">South Africa</span>
     </div>
-    <div class="clock-card">
+    <div class="clock-card card-blue">
+      <div class="drip"></div>
       <h2>Ottawa</h2>
       <p id="ottawa-time" class="time">--:--:--</p>
+      <span class="zone-label">Canada</span>
     </div>
   </div>
-  <p class="credit">Built by pswoosh</p>
+
+  <p class="credit">tagged by pswoosh</p>
+
+  <div class="spray-can" title="Click anywhere to spray!">🎨</div>
+
   <script src="app.js"></script>
 </body>
 </html>
