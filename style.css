@@ -1,54 +1,404 @@
+/* === RESET === */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* === BRICK WALL BACKGROUND === */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: #1a1a2e;
-  color: #888888;
+  font-family: 'Permanent Marker', cursive;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  position: relative;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='20'%3E🎨%3C/text%3E%3C/svg%3E") 12 12, crosshair;
+
+  /* Realistic brick wall */
+  background-color: #3c2415;
+  background-image:
+    /* Horizontal mortar */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 38px,
+      #5a4030 38px,
+      #5a4030 42px
+    ),
+    /* Vertical mortar - row 1 */
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 78px,
+      #5a4030 78px,
+      #5a4030 82px
+    );
+  background-size: 82px 42px, 82px 42px;
 }
 
-h1 {
+/* Second brick row offset */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 78px,
+      #5a4030 78px,
+      #5a4030 82px
+    );
+  background-size: 82px 42px;
+  background-position: 41px 21px;
+  opacity: 0.7;
+}
+
+/* Spray dot splatter overlay */
+.spray-dots {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle 3px, #ff206e55 100%, transparent 100%),
+    radial-gradient(circle 4px, #00ff8844 100%, transparent 100%),
+    radial-gradient(circle 2px, #ffd60a55 100%, transparent 100%),
+    radial-gradient(circle 5px, #00b4d844 100%, transparent 100%),
+    radial-gradient(circle 2px, #ff206e33 100%, transparent 100%),
+    radial-gradient(circle 3px, #ff6b6b44 100%, transparent 100%);
+  background-size: 120px 100px, 150px 130px, 90px 80px, 110px 110px, 200px 150px, 170px 190px;
+  background-position: 10px 20px, 60px 50px, 30px 10px, 80px 70px, 140px 30px, 20px 160px;
+}
+
+/* === STICKER DECORATIONS === */
+.sticker {
+  position: fixed;
+  z-index: 2;
+  font-size: 2.5rem;
+  filter: drop-shadow(2px 2px 2px #00000088);
+  animation: sticker-wobble 3s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.sticker:nth-child(1) { top: 8%; left: 5%; animation-delay: 0s; }
+.sticker:nth-child(2) { top: 15%; right: 8%; animation-delay: 0.5s; }
+.sticker:nth-child(3) { bottom: 12%; left: 8%; animation-delay: 1s; }
+.sticker:nth-child(4) { bottom: 10%; right: 5%; animation-delay: 1.5s; }
+.sticker:nth-child(5) { top: 50%; left: 3%; animation-delay: 0.7s; }
+
+@keyframes sticker-wobble {
+  from { transform: rotate(-5deg) scale(1); }
+  to   { transform: rotate(5deg) scale(1.1); }
+}
+
+/* === SPRAY STREAK behind title === */
+.spray-streak {
+  position: absolute;
+  z-index: 0;
+  width: 600px;
+  height: 160px;
+  top: 8%;
+  left: 50%;
+  transform: translateX(-50%) rotate(-3deg);
+  background:
+    radial-gradient(ellipse at 30% 50%, #ff206e22 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 50%, #00ff8822 0%, transparent 60%),
+    radial-gradient(ellipse at center, #c77dff33 0%, #c77dff15 40%, transparent 70%);
+  filter: blur(12px);
+  pointer-events: none;
+}
+
+/* === ANIMATED STARS / SPARKLES === */
+.sparkle {
+  position: fixed;
+  z-index: 3;
+  font-size: 1.6rem;
+  pointer-events: none;
+  animation: sparkle-pop 2s ease-in-out infinite;
+}
+
+.sparkle:nth-child(1) { top: 22%; left: 15%; animation-delay: 0s; font-size: 1.2rem; }
+.sparkle:nth-child(2) { top: 18%; right: 12%; animation-delay: 0.7s; font-size: 1.8rem; }
+.sparkle:nth-child(3) { bottom: 25%; left: 20%; animation-delay: 1.3s; font-size: 1rem; }
+.sparkle:nth-child(4) { bottom: 20%; right: 18%; animation-delay: 0.4s; font-size: 1.4rem; }
+
+@keyframes sparkle-pop {
+  0%, 100% { opacity: 0.2; transform: scale(0.6) rotate(0deg); }
+  50%      { opacity: 1; transform: scale(1.2) rotate(180deg); }
+}
+
+/* === CROWN (graffiti classic) === */
+.crown {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  font-size: 3rem;
+  color: #ffd60a;
+  text-shadow: 2px 2px 0 #000, 0 0 15px #ffd60a88;
+  animation: crown-bounce 1.5s ease-in-out infinite;
+  margin-bottom: -0.5rem;
+  filter: drop-shadow(0 0 10px #ffd60a44);
+}
+
+@keyframes crown-bounce {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50%      { transform: translateY(-6px) rotate(2deg); }
+}
+
+/* === TITLE — Big graffiti tag === */
+.title-tag {
+  position: relative;
+  z-index: 1;
   margin-bottom: 2rem;
-  font-size: 2rem;
+  text-align: center;
+  line-height: 1;
+  animation: title-shake 0.15s ease-in-out infinite alternate;
 }
 
+@keyframes title-shake {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  25%  { transform: translate(0.5px, -0.5px) rotate(-0.3deg); }
+  50%  { transform: translate(-0.5px, 0.5px) rotate(0.3deg); }
+  75%  { transform: translate(0.5px, 0.5px) rotate(-0.2deg); }
+  100% { transform: translate(-0.5px, -0.5px) rotate(0.2deg); }
+}
+
+.title-world {
+  display: block;
+  font-family: 'Bungee Shade', cursive;
+  font-size: 4.5rem;
+  color: #ff206e;
+  text-shadow:
+    4px 4px 0 #000,
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    0 0 30px #ff206eaa,
+    0 0 60px #ff206e44;
+  letter-spacing: 0.15em;
+  transform: rotate(-4deg);
+}
+
+.title-clock {
+  display: block;
+  font-family: 'Rubik Spray Paint', cursive;
+  font-size: 5.5rem;
+  color: #00ff88;
+  text-shadow:
+    4px 4px 0 #000,
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    0 0 40px #00ff8888,
+    0 0 80px #00ff8833;
+  letter-spacing: 0.2em;
+  transform: rotate(2.5deg);
+  margin-top: -0.5rem;
+}
+
+/* === CLOCK CARDS === */
 .clocks {
   display: flex;
-  gap: 2rem;
+  gap: 2.5rem;
   flex-wrap: wrap;
   justify-content: center;
+  position: relative;
+  z-index: 1;
 }
 
 .clock-card {
-  background: #16213e;
-  border-radius: 12px;
-  padding: 2rem 3rem;
+  position: relative;
+  border-radius: 4px;
+  padding: 2rem 2.5rem 1.5rem;
   text-align: center;
-  min-width: 220px;
+  min-width: 260px;
+  border: 4px solid;
+  transform: rotate(-2deg);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: visible;
 }
 
+.clock-card:nth-child(even) {
+  transform: rotate(2deg);
+}
+
+.clock-card:hover {
+  transform: rotate(0deg) scale(1.1) skewY(-1deg);
+  z-index: 10;
+}
+
+/* Tape strips on top corners */
+.clock-card::before,
+.clock-card::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  width: 50px;
+  height: 18px;
+  background: #ffd60acc;
+  transform: rotate(-5deg);
+  z-index: 3;
+  border-radius: 2px;
+}
+
+.clock-card::before { left: 15px; transform: rotate(-8deg); }
+.clock-card::after  { right: 15px; transform: rotate(6deg); }
+
+/* Card color variants */
+.card-pink {
+  background: rgba(20, 10, 30, 0.92);
+  border-color: #ff206e;
+  box-shadow:
+    0 0 25px #ff206e66,
+    inset 0 0 40px #ff206e15,
+    5px 5px 0 #000;
+}
+
+.card-pink:hover {
+  box-shadow:
+    0 0 40px #ff206e99,
+    inset 0 0 50px #ff206e22,
+    5px 5px 0 #000;
+}
+
+.card-blue {
+  background: rgba(20, 10, 30, 0.92);
+  border-color: #00b4d8;
+  box-shadow:
+    0 0 25px #00b4d866,
+    inset 0 0 40px #00b4d815,
+    5px 5px 0 #000;
+}
+
+.card-blue:hover {
+  box-shadow:
+    0 0 40px #00b4d899,
+    inset 0 0 50px #00b4d822,
+    5px 5px 0 #000;
+}
+
+/* Drip effect on cards */
+.drip {
+  position: absolute;
+  top: -4px;
+  left: 20%;
+  width: 10px;
+  height: 35px;
+  border-radius: 0 0 5px 5px;
+  animation: drip-grow 2s ease-in-out infinite alternate;
+}
+
+@keyframes drip-grow {
+  from { height: 30px; }
+  to   { height: 42px; }
+}
+
+.card-pink .drip {
+  background: #ff206e;
+  box-shadow: 35px 5px 0 0 #ff206e, 60px -3px 0 3px #ff206e;
+}
+
+.card-blue .drip {
+  background: #00b4d8;
+  box-shadow: 30px 3px 0 0 #00b4d8, 65px -3px 0 3px #00b4d8;
+}
+
+/* City name */
 .clock-card h2 {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-  color: #a8b2d1;
+  font-family: 'Rubik Spray Paint', cursive;
+  font-size: 1.8rem;
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
+.card-pink h2 { color: #ff206e; text-shadow: 2px 2px 0 #000; }
+.card-blue h2 { color: #00b4d8; text-shadow: 2px 2px 0 #000; }
+
+/* Time display */
 .time {
-  font-size: 3rem;
+  font-family: 'Permanent Marker', cursive;
+  font-size: 3.8rem;
   font-weight: 700;
+  color: #ffd60a;
+  text-shadow:
+    3px 3px 0 #000,
+    -1px -1px 0 #000,
+    0 0 20px #ffd60a88;
   font-variant-numeric: tabular-nums;
+  animation: pulse-glow 2s ease-in-out infinite alternate;
 }
 
+@keyframes pulse-glow {
+  from { text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 0 0 10px #ffd60a44; }
+  to   { text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 0 0 35px #ffd60aaa; }
+}
+
+/* Seconds separator blink */
+.time .colon {
+  animation: colon-blink 1s step-end infinite;
+}
+
+@keyframes colon-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.3; }
+}
+
+/* Zone label */
+.zone-label {
+  display: block;
+  font-family: 'Permanent Marker', cursive;
+  font-size: 0.85rem;
+  color: #aaa;
+  margin-top: 0.4rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* === SPRAY CAN ICON === */
+.spray-can {
+  position: fixed;
+  bottom: 15px;
+  right: 20px;
+  font-size: 2rem;
+  z-index: 10;
+  animation: can-rock 1s ease-in-out infinite alternate;
+  cursor: pointer;
+  filter: drop-shadow(0 0 8px #ffd60a88);
+}
+
+@keyframes can-rock {
+  from { transform: rotate(-10deg); }
+  to   { transform: rotate(10deg); }
+}
+
+/* === CREDIT TAG === */
 .credit {
-  margin-top: 2rem;
-  font-size: 1rem;
-  color: #f5c542;
+  position: relative;
+  z-index: 1;
+  margin-top: 2.5rem;
+  font-family: 'Rubik Spray Paint', cursive;
+  font-size: 1.3rem;
+  color: #ffd60a;
+  text-shadow: 2px 2px 0 #000, 0 0 15px #ffd60a66;
+  letter-spacing: 0.1em;
+  transform: rotate(-3deg);
+  padding: 0.3rem 1rem;
+  border: 2px dashed #ffd60a55;
+  border-radius: 3px;
+}
+
+/* === MOBILE === */
+@media (max-width: 600px) {
+  .title-world { font-size: 2.5rem; }
+  .title-clock { font-size: 3.2rem; }
+  .time { font-size: 2.5rem; }
+  .clock-card { min-width: 180px; padding: 1.5rem 1.5rem 1rem; }
+  .sticker { font-size: 1.8rem; }
 }
